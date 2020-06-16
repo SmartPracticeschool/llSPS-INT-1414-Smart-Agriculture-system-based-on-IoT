@@ -1,0 +1,290 @@
+[
+    {
+        "id": "91d655d4.88da38",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "dcb77d85.6ae7a",
+        "type": "debug",
+        "z": "91d655d4.88da38",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 450,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "c06376fe.d6f3f8",
+        "type": "ibmiot in",
+        "z": "91d655d4.88da38",
+        "authentication": "apiKey",
+        "apiKey": "d18438bd.91dcb8",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "123456789",
+        "applicationId": "",
+        "deviceType": "Harshitha_device-1",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": "",
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 130,
+        "y": 280,
+        "wires": [
+            [
+                "dcb77d85.6ae7a",
+                "f1c2078.7bf9ef8",
+                "f71e2f81.feafe"
+            ]
+        ]
+    },
+    {
+        "id": "f1c2078.7bf9ef8",
+        "type": "function",
+        "z": "91d655d4.88da38",
+        "name": "temperature",
+        "func": "msg.payload=msg.payload.d.temperature;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 270,
+        "y": 380,
+        "wires": [
+            [
+                "dcb77d85.6ae7a",
+                "bbd85444.88fab8"
+            ]
+        ]
+    },
+    {
+        "id": "f71e2f81.feafe",
+        "type": "function",
+        "z": "91d655d4.88da38",
+        "name": "humidity",
+        "func": "msg.payload=msg.payload.d.humidity;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 270,
+        "y": 160,
+        "wires": [
+            [
+                "dcb77d85.6ae7a",
+                "69ec67cc.b43af8"
+            ]
+        ]
+    },
+    {
+        "id": "bbd85444.88fab8",
+        "type": "ui_gauge",
+        "z": "91d655d4.88da38",
+        "name": "",
+        "group": "1cd6439b.5db74c",
+        "order": 0,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "Temperature",
+        "label": "Degree Celcius",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 590,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "69ec67cc.b43af8",
+        "type": "ui_gauge",
+        "z": "91d655d4.88da38",
+        "name": "",
+        "group": "1cd6439b.5db74c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "gtype": "gage",
+        "title": "humidity",
+        "label": "units",
+        "format": "{{value}}",
+        "min": 0,
+        "max": "100",
+        "colors": [
+            "#00b500",
+            "#e6e600",
+            "#ca3838"
+        ],
+        "seg1": "",
+        "seg2": "",
+        "x": 570,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "162cb207.42ad8e",
+        "type": "http request",
+        "z": "91d655d4.88da38",
+        "name": "",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": false,
+        "url": "api.openweathermap.org/data/2.5/weather?q=Suryapet, IN&appid=406ef0b50cd7a69dd92299fbb97f35af",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 750,
+        "y": 400,
+        "wires": [
+            [
+                "dcb77d85.6ae7a"
+            ]
+        ]
+    },
+    {
+        "id": "126c6d60.ab8b13",
+        "type": "inject",
+        "z": "91d655d4.88da38",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "5",
+        "x": 630,
+        "y": 460,
+        "wires": [
+            [
+                "162cb207.42ad8e"
+            ]
+        ]
+    },
+    {
+        "id": "4c0f93cd.e6d29c",
+        "type": "ibmiot out",
+        "z": "91d655d4.88da38",
+        "authentication": "apiKey",
+        "apiKey": "d18438bd.91dcb8",
+        "outputType": "cmd",
+        "deviceId": "123456789",
+        "deviceType": "Harshitha_device-1",
+        "eventCommandType": "command",
+        "format": "json",
+        "data": "data",
+        "qos": 0,
+        "name": "IBM IoT",
+        "service": "registered",
+        "x": 420,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "160f5442.a77aec",
+        "type": "ui_button",
+        "z": "91d655d4.88da38",
+        "name": "",
+        "group": "1cd6439b.5db74c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Motor ON",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"command\":\"motoron\"} ",
+        "payloadType": "json",
+        "topic": "",
+        "x": 100,
+        "y": 40,
+        "wires": [
+            [
+                "4c0f93cd.e6d29c",
+                "dcb77d85.6ae7a"
+            ]
+        ]
+    },
+    {
+        "id": "c0bc9e27.1f005",
+        "type": "ui_button",
+        "z": "91d655d4.88da38",
+        "name": "",
+        "group": "1cd6439b.5db74c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": false,
+        "label": "Motor OFF",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "icon": "",
+        "payload": "{\"command\":\"motoroff\"}",
+        "payloadType": "json",
+        "topic": "",
+        "x": 110,
+        "y": 100,
+        "wires": [
+            [
+                "4c0f93cd.e6d29c",
+                "dcb77d85.6ae7a"
+            ]
+        ]
+    },
+    {
+        "id": "d18438bd.91dcb8",
+        "type": "ibmiot",
+        "z": "",
+        "name": "",
+        "keepalive": "60",
+        "serverName": "",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "1cd6439b.5db74c",
+        "type": "ui_group",
+        "z": "",
+        "name": "IoT",
+        "tab": "6517d544.7f78ac",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "6517d544.7f78ac",
+        "type": "ui_tab",
+        "z": "",
+        "name": "SmartAgriculture",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
